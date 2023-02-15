@@ -42,8 +42,8 @@ async def quiz1(message: types.Message):
 @db.callback_query_handler(text='button')
 async def quiz2(call: types.CallbackQuery):
     markup = InlineKeyboardMarkup()
-    button = InlineKeyboardButton('next', callback_data='button')
-    markup.add(button)
+    spider = InlineKeyboardButton('next', callback_data='spider')
+    markup.add(spider)
     ques = 'Откуда мем?'
     answer = [
         'Бетмэн',
@@ -67,11 +67,11 @@ async def quiz2(call: types.CallbackQuery):
         reply_markup=markup
     )
 
-@db.callback_query_handler(text='button')
+@db.callback_query_handler(text='spider')
 async def quiz3(call: types.CallbackQuery):
     markup = InlineKeyboardMarkup()
-    button = InlineKeyboardButton('next', callback_data='button')
-    markup.add(button)
+    monster = InlineKeyboardButton('next', callback_data='monster')
+    markup.add(monster)
     ques = 'Откуда мем?'
     answer = [
         'Корпорация монстров',
@@ -94,56 +94,29 @@ async def quiz3(call: types.CallbackQuery):
         open_period=10,
         reply_markup=markup
     )
-@db.callback_query_handler(text='button')
+@db.callback_query_handler(text='monster')
 async def quiz4(call: types.CallbackQuery):
     markup = InlineKeyboardMarkup()
-    button = InlineKeyboardButton('next', callback_data='button')
-    markup.add(button)
     ques = 'Откуда мем?'
     answer = [
-        'Неуязвимый',
         'Спанч Боб Квадратные штаны',
         'Человек-паук',
         'Халк',
+        'Корпорация монстров',
         'Бесстыжие',
-        'Корпорация монстров'
+        'Неуязвимый',
     ]
-    photo = open('media/корпорация монстров.jpg', 'rb')
+    photo = open('media/monster.jpg', 'rb')
     await bot.send_photo(call.from_user.id, photo=photo)
     await bot.send_poll(
         chat_id=call.from_user.id,
         question=ques,
         options=answer,
-        is_anonymous=False,
+        is_anonymous=True,
         type='quiz',
-        correct_option_id=-1,
-        explanation='Это Корпорация монстров',
+        correct_option_id=3,
+        explanation='Это Корпорация Монстров',
         open_period=10,
-        reply_markup=markup
-    )
-
-@db.callback_query_handler(text='button')
-async def quiz5(call: types.CallbackQuery):
-    ques = 'Откуда мем?'
-    answer = [
-        'Великий Гетсби',
-        'Спанч Боб Квадратные штаны',
-        'Халк',
-        'Бесстыжие',
-        'Освобождённый Джанго'
-        'Титаник',
-    ]
-    photo = open('media/освобожденный джанго.jpg', 'rb')
-    await bot.send_photo(call.from_user.id, photo=photo)
-    await bot.send_poll(
-        chat_id=call.from_user.id,
-        question=ques,
-        options=answer,
-        is_anonymous=False,
-        type='quiz',
-        correct_option_id=-2,
-        explanation='Это освобождённый джанго',
-        open_period=10
     )
 
 @db.message_handler()
